@@ -2,21 +2,8 @@ import math
 
 class Universal_Gyro:
   def __init__(self):
-    self.heading = 90
+    self.heading = 0
     self.angle = 0
-
-  def __in_range(self, low, high, target):
-    if target >= low and target <= high:
-      return True
-    else:
-      return False
-
-  def angle(self):
-    return self.heading
-
-  def update_angle(self, new_angle):
-    self.angle = new_angle
-    return self.angle
 
   def find_nearest_heading(self, target_angle):
     possible_values = []
@@ -49,3 +36,23 @@ class Universal_Gyro:
         if target_angle - value == -360:
           print(value + 360, '<--')
           return value + 360
+
+  def __in_range(self, low, high, target):
+    if target >= low and target <= high:
+      return True
+    else:
+      return False
+
+  def heading(self):
+    return self.heading
+
+  def angle(self):
+    return self.angle
+
+  def update_angle(self, new_angle):
+    self.angle = new_angle
+    return self.angle
+
+  def update_heading(self, new_heading):
+    self.heading = self.find_nearest_heading(self.angle)
+    return self.heading
