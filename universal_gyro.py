@@ -5,12 +5,6 @@ class Universal_Gyro:
     self.heading = 0
     self.angle = 0
 
-  def __in_range(self, low, high, target):
-    if target >= low and target <= high:
-      return True
-    else:
-      return False
-
   def find_nearest_heading(self, target_angle):
     return target_angle % 360
 
