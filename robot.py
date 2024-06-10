@@ -7,6 +7,7 @@ from pybricks.nxtdevices import LightSensor
 from pybricks.media.ev3dev import Image, ImageFile
 
 from pid import PIDController
+from universal_gyro import Universal_Gyro
 import math
 
 class Generic_Robot:
@@ -23,6 +24,8 @@ class Generic_Robot:
     self.right_color_percent = 0
     self.left_color_black = 0
     self.right_color_black = 0
+
+    self.univ = Universal_Gyro()
 
   ### DRIVE MILIMETERS ###
   def drive_mm(self, angle, speed, mm, rate=500, brake=True):
@@ -90,6 +93,20 @@ class Generic_Robot:
     self.robot.stop()
     self.lm.brake()
     self.rm.brake()
+
+  ### DRIVE GYRO MILIMETERS UNIVERSAL ###
+  def gyro_drive_uni(self, heading, speed, distance_mm, gainP=3.719, gainI=0.54, gainD=0.1125, reset_sensor=True):
+    self.robot.reset()
+
+    pid_controller = PIDController(gainP, gainI, gainD)
+    while self.robot.distance() < distance_mm:
+      print(self.univ.heading, self.gyro.angle(), heading - self.univ.heading)
+      self.univ.update(self.gyro.angle())
+      self.robot.drive(speed, pid_controller.adjust(heading - self.univ.heading))
+
+    self.robot.stop()
+    self.lm.brake()
+    self.rm.brake() 
 
   ### CALIBRATE COLOR ###
   def calibrate_color(self):
