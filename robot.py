@@ -69,44 +69,29 @@ class Generic_Robot:
 
     self.drive_tank(motor_degrees, left_speed, right_speed)
 
-  ### DRIVE GYRO MILIMETERS ###
-  def gyro_drive(self, angle, speed, distance_mm, gainP=3.719, gainI=0.54, gainD=0.1125, reset_sensor=True):
-    self.robot.reset()
-    if reset_sensor == True:
-      self.gyro.reset_angle(0)
-    
-    # Check & Adjust for Backwards
-    if distance_mm < 0:
-      gainP = 0 - gainP
-      gainI = 0 - gainI
-      gainD = 0 - gainD
-      speed = 0 - speed
+  def inRange(self, target, low, high):
+    if target >= low and target <= high:
+      return True
 
-      pid_controller = PIDController(gainP, gainI, gainD)
-      while self.robot.distance() > distance_mm:
-        self.robot.drive(speed, pid_controller.adjust(angle - self.gyro.angle()))
-    else:
-      pid_controller = PIDController(gainP, gainI, gainD)
-      while self.robot.distance() < distance_mm:
-        self.robot.drive(speed, pid_controller.adjust(angle - self.gyro.angle()))
+    return False
+
+  ### DRIVE GYRO MILIMETERS UNIVERSAL ###
+  def gyro_drive_uni(self, angle, speed, distance_mm, gainP=3.719, gainI=0.54, gainD=0.1125, reset_sensor=True):
+    self.robot.reset()
+
+    if not self.inRange(self.univ.angle, angle - 5, angle + 5):
+      self.pivot(angle, 150)
+
+    pid_controller = PIDController(gainP, gainI, gainD)
+    while self.robot.distance() < distance_mm:
+      self.univ.update(self.gyro.angle())
+      self.robot.drive(speed, pid_controller.adjust_heading(angle - self.univ.heading))
 
     self.robot.stop()
     self.lm.brake()
     self.rm.brake()
 
-  ### DRIVE GYRO MILIMETERS UNIVERSAL ###
-  def gyro_drive_uni(self, heading, speed, distance_mm, gainP=3.719, gainI=0.54, gainD=0.1125, reset_sensor=True):
-    self.robot.reset()
-
-    pid_controller = PIDController(gainP, gainI, gainD)
-    while self.robot.distance() < distance_mm:
-      print(self.univ.heading, self.gyro.angle(), heading - self.univ.heading)
-      self.univ.update(self.gyro.angle())
-      self.robot.drive(speed, pid_controller.adjust(heading - self.univ.heading))
-
-    self.robot.stop()
-    self.lm.brake()
-    self.rm.brake() 
+  
 
   ### CALIBRATE COLOR ###
   def calibrate_color(self):
