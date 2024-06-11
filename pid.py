@@ -16,3 +16,15 @@ class PIDController:
     self.integral = error + self.integral * (2/3)
     derivative = error - self.last_error
     return (error * self.gainP) + (self.integral * self.gainI) + (derivative * self.gainD)
+
+  def adjust_heading(self, heading_error):
+    wait(self.desiredTime)
+
+    if heading_error < -180:
+      error = heading_error + 360
+    else:
+      error = heading_error
+
+    self.integral = error + self.integral * (2/3)
+    derivative = error - self.last_error
+    return (error * self.gainP) + (self.integral * self.gainI) + (derivative * self.gainD)
