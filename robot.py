@@ -75,8 +75,8 @@ class Generic_Robot:
 
     return False
 
-  ### DRIVE GYRO MILIMETERS UNIVERSAL ###
-  def gyro_drive_uni(self, angle, speed, distance_mm, gainP=3.719, gainI=0.54, gainD=0.1125, reset_sensor=True):
+  ### DRIVE GYRO MILIMETERS RELATIVE ###
+  def gyro_drive_rel(self, angle, speed, distance_mm, gainP=3.719, gainI=0.54, gainD=0.1125, reset_sensor=True):
     self.robot.reset()
 
     if not self.inRange(self.univ.angle, angle - 5, angle + 5):
@@ -85,13 +85,31 @@ class Generic_Robot:
     pid_controller = PIDController(gainP, gainI, gainD)
     while self.robot.distance() < distance_mm:
       self.univ.update(self.gyro.angle())
-      self.robot.drive(speed, pid_controller.adjust_heading(angle - self.univ.heading))
+      self.robot.drive(speed, pid_controller.adjust(angle - self.univ.angle))
 
     self.robot.stop()
     self.lm.brake()
     self.rm.brake()
 
-  
+  ### DRIVE GYRO MILIMETERS UNIVERSAL ###
+  def gyro_drive_uni(self, heading, speed, distance_mm, gainP=3.719, gainI=0.54, gainD=0.1125, reset_sensor=True):
+    self.robot.reset()
+
+    angle = heading
+    if heading > 180:
+      angle = heading - 360
+
+    if not self.inRange(self.univ.angle, angle - 5, angle + 5):
+      self.pivot(angle, 150)
+
+    pid_controller = PIDController(gainP, gainI, gainD)
+    while self.robot.distance() < distance_mm:
+      self.univ.update(self.gyro.angle())
+      self.robot.drive(speed, pid_controller.adjust_heading(heading - self.univ.heading))
+
+    self.robot.stop()
+    self.lm.brake()
+    self.rm.brake()
 
   ### CALIBRATE COLOR ###
   def calibrate_color(self):
