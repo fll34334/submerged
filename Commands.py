@@ -82,15 +82,18 @@ class Wait:
     robot.wait(self.time)
 
 class ShiftGear:
-  def _init_(self, speed=150, gear=1):
+  def __init__(self, speed=150, gear=1, CurrentGear=1, wait=True): #DONT PUT CURRENT GEAR IN MISSION!
     self.speed = speed
     self.gear = gear
-    #gear = self.gear
-    #CurrentGear = 1 # can it be stored??
-    
+    self.wait = wait
+    self.CurrentGear = CurrentGear
+    gear = self.gear
+    CurrentGear = self.CurrentGear
 
   def run(self, robot):
-    self.gear = 1
+    print("def run")
+    speed = self.speed
+    CurrentGear = self.CurrentGear
     gear = self.gear
     Change = gear - CurrentGear
     def gearlogic(CurrentGear, gear, Change):
@@ -102,29 +105,39 @@ class ShiftGear:
       elif 1 < CurrentGear + Change <= 4:
         CurrentGear =+ Change
       print(CurrentGear)
+    print("after logic")
     if Change == 0:
       robot.wait(time=100)
+      print("change=0")
     elif Change == 1:
-      robot.act_run_angle("left", self.speed, angle=40)
-      gearlogic()
+      print("change=1")
+      robot.act_run_angle(motor="right", speed=150, angle=90, wait=True)
+      gearlogic(CurrentGear, gear, Change)
     elif Change == 2:
-      robot.act_run_angle("left", self.speed, angle=80)
-      gearlogic()
+      print("change=2")
+      robot.act_run_angle(motor="right", speed=150, angle=180, wait=True)
+      gearlogic(CurrentGear, gear, Change)
     elif Change == 3:
-      robot.act_run_angle("left", self.speed, angle=120)
-      gearlogic()
+      print("change=3")
+      robot.act_run_angle(motor="right", speed=150, angle=270, wait=True)
+      gearlogic(CurrentGear, gear, Change)
     elif Change == 4:
-      robot.act_run_angle("left", self.speed, angle=-40)
-      gearlogic()
+      print("change=4")
+      robot.act_run_angle(motor="right", speed=150, angle=-90, wait=True)
+      gearlogic(CurrentGear, gear, Change)
     elif Change == -1:
-      robot.act_run_angle("left", self.speed, angle=-40)
-      gearlogic()
+      print("change=-1")
+      robot.act_run_angle(motor="right", speed=150, angle=-90, wait=True)
+      gearlogic(CurrentGear, gear, Change)
     elif Change == -2:
-      robot.act_run_angle("left", self.speed, angle=-80)
-      gearlogic()
+      print("change=-2")
+      robot.act_run_angle(motor="right", speed=150, angle=-120, wait=True)
+      gearlogic(CurrentGear, gear, Change)
     elif Change == -3:
-      robot.act_run_angle("left", self.speed, angle=-120)
-      gearlogic()
+      print("change=-3")
+      robot.act_run_angle(motor="right", speed=150, angle=-270, wait=True)
+      gearlogic(CurrentGear, gear, Change)
     elif Change == -4:
-      robot.act_run_angle("left", self.speed, angle=40)
-      gearlogic()
+      print("change=-4")
+      robot.act_run_angle(motor="right", speed=150, angle=90, wait=True)
+      gearlogic(CurrentGear, gear, Change)
