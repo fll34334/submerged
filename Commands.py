@@ -81,10 +81,50 @@ class Wait:
   def run(self, robot):
     robot.wait(self.time)
 
-#class ShiftGear:
-#  def _init_(self, speed=150, gear=1):
-#    self.speed = speed
-#    self.gear = gear
-#
-#  def run(self, robot):
-#    #Now just robot.py stuff
+class ShiftGear:
+  def _init_(self, speed=150, gear=1):
+    self.speed = speed
+    self.gear = gear
+    #gear = self.gear
+    #CurrentGear = 1 # can it be stored??
+    
+
+  def run(self, robot):
+    self.gear = 1
+    gear = self.gear
+    Change = gear - CurrentGear
+    def gearlogic(CurrentGear, gear, Change):
+      print(CurrentGear, " to ", self.gear, " = ")
+      if CurrentGear + Change > 4:
+        CurrentGear = CurrentGear + Change - 4
+      elif CurrentGear + Change < 1:
+        CurrentGear = CurrentGear + Change + 4
+      elif 1 < CurrentGear + Change <= 4:
+        CurrentGear =+ Change
+      print(CurrentGear)
+    if Change == 0:
+      robot.wait(time=100)
+    elif Change == 1:
+      robot.act_run_angle("left", self.speed, angle=40)
+      gearlogic()
+    elif Change == 2:
+      robot.act_run_angle("left", self.speed, angle=80)
+      gearlogic()
+    elif Change == 3:
+      robot.act_run_angle("left", self.speed, angle=120)
+      gearlogic()
+    elif Change == 4:
+      robot.act_run_angle("left", self.speed, angle=-40)
+      gearlogic()
+    elif Change == -1:
+      robot.act_run_angle("left", self.speed, angle=-40)
+      gearlogic()
+    elif Change == -2:
+      robot.act_run_angle("left", self.speed, angle=-80)
+      gearlogic()
+    elif Change == -3:
+      robot.act_run_angle("left", self.speed, angle=-120)
+      gearlogic()
+    elif Change == -4:
+      robot.act_run_angle("left", self.speed, angle=40)
+      gearlogic()
