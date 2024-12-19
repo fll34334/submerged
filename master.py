@@ -5,6 +5,8 @@ from pybricks.parameters import Button
 from pybricks.tools import wait
 
 from robot import Robot_Plus
+#from Commands.py import ShiftGear
+
 
 from M02 import m02
 from M03 import m03
@@ -112,7 +114,7 @@ class Master_Main():
           run_num = len(self.missions) - 1
 
       self.display(run_num, button)
-    
+    # put Gear var here?
   def calibrate_gyro(self):
     error = 0
     self.count = 0
@@ -161,3 +163,17 @@ class Master_Main():
     self.ev3.screen.set_font(self.mission_font)
     self.display(0, "IMAGES/buttons/buttons-empty")
     self.module()
+
+class GearVar():
+  def __init__(self, CurrentGear):
+    self.CurrentGear = CurrentGear
+    CurrentGear = self.CurrentGear
+  def gearlogic(CurrentGear, gear, Change):
+    print(CurrentGear, " to ", gear)
+    if CurrentGear + Change > 4:
+      CurrentGear = CurrentGear + Change - 4
+    elif CurrentGear + Change < 1:
+      CurrentGear = CurrentGear + Change + 4
+    elif 1 < CurrentGear + Change <= 4:
+      CurrentGear =+ Change
+    print("after = ", CurrentGear)

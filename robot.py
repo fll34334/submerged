@@ -221,9 +221,9 @@ class Robot_Plus(Generic_Robot):
     self.act_left = Motor(Port.A, Direction.CLOCKWISE, gears=None)
     self.drive_base = DriveBase(self.left_motor, self.right_motor, self.wheel_diameter, self.wheel_base)
     #self.infared = InfraredSensor(Port.S1)
-    self.left_color = ColorSensor(Port.S3)
-    self.right_color = ColorSensor(Port.S4)
-    self.gyro_sensor = GyroSensor(Port.S2)
+    self.left_color = ColorSensor(Port.S2)
+    self.right_color = ColorSensor(Port.S3)
+    self.gyro_sensor = GyroSensor(Port.S4)
 
     Generic_Robot.__init__(self, self.ev3, self.drive_base, self.left_motor, self.right_motor, self.left_color, self.right_color, self.gyro_sensor, self.wheel_diameter, self.wheel_base)
   
