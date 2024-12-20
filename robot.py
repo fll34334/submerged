@@ -67,6 +67,29 @@ class Generic_Robot:
     motor_degrees = (360 / wheel_circumference_mm) * target_distance
 
     self.drive_tank(motor_degrees, left_speed, right_speed)
+  ### Gyro Pivot ###
+  def GyroPivot(self, target_angle, speed):
+    self.robot.reset()
+    left_speed = speed
+    right_speed = 0 - speed
+    Reverse_angle = False
+    if 0 > target_angle:
+      left_speed = 0 - speed
+      right_speed = speed
+      target_angle = 0 - target_angle
+      Reverse_angle = True
+    self.GyroSensor.reset_angle()
+    
+    lm.start(speed=left_speed)
+    rm.start(speed=right_speed)
+    if Reverse_angle:
+      while self.gyro.angle > target_angle:
+        Wait(0)
+    else
+      while self.gyro.angle < target_angle:
+        Wait(0)
+    self.lm.stop()
+    self.rm.stop()
 
   ### DRIVE GYRO MILIMETERS ###
   def gyro_drive(self, angle, speed, distance_mm, gainP=3.719, gainI=0.54, gainD=0.1125, reset_sensor=True):

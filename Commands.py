@@ -33,6 +33,17 @@ class Pivot:
     robot.pivot(self.angle, self.speed)
     robot.wait(self.wait)
 
+class Pivot:
+  def __init__(self, angle=0, speed=100, wait=75):
+    self.angle = angle
+    self.speed = speed
+    self.wait = wait
+
+  def run(self, robot):
+    robot.wait(self.wait)
+    robot.GyroPivot(self.angle, self.speed)
+    robot.wait(self.wait)
+
 class LineSquare:
   def __init__(self, target=20, targetBlack=13, targetWhite=80, approachSpeed=100, finetuneSpeed=50, returnTime=2500):
     self.target = target
