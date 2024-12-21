@@ -34,7 +34,7 @@ class Generic_Robot:
       self.robot.straight(mm)
     else:
       # Check for Backwards & adjust accordingly
-      if mm < 0:
+      if mm < 0: #works only for distance but not speed
         speed = 0 - speed
         self.robot.drive(speed, angle)
         while self.robot.distance() > mm:
@@ -73,21 +73,39 @@ class Generic_Robot:
     left_speed = speed
     right_speed = 0 - speed
     Reverse_angle = False
-    if 0 > target_angle:
+    if 0 > target_angle and 0 > speed:
+      left_speed = speed
+      right_speed = 0 - speed
+      Reverse_angle=False
+    elif 0 > target_angle and 0 < speed:
       left_speed = 0 - speed
       right_speed = speed
-      target_angle = 0 - target_angle
       Reverse_angle = True
-    self.GyroSensor.reset_angle()
-    
-    lm.start(speed=left_speed)
-    rm.start(speed=right_speed)
+    elif 0 < target_angle and 0 > speed:
+      left_speed = 0 - speed
+      right_speed = speed
+      Reverse_angle=True
+    elif 0 < target_angle and 0 < speed:
+      left_speed = speed
+      right_speed = 0 - speed
+      Reverse_angle = False
+    else:
+      print("0_error")
+
+    self.gyro.reset_angle(0)
+    self.lm.run(speed=left_speed)
+    self.rm.run(speed=right_speed)
+
     if Reverse_angle:
-      while self.gyro.angle > target_angle:
-        Wait(0)
-    else
-      while self.gyro.angle < target_angle:
-        Wait(0)
+      print("reverse=true")
+      while self.gyro.angle() > target_angle:
+        wait(0)
+    else:
+      print("reverse=flase")
+      while self.gyro.angle() < target_angle:
+        wait(0)
+
+    print("done")
     self.lm.stop()
     self.rm.stop()
 
@@ -98,7 +116,7 @@ class Generic_Robot:
       self.gyro.reset_angle(0)
     
     # Check & Adjust for Backwards
-    if distance_mm < 0:
+    if distance_mm < 0 or speed < 0:
       gainP = 0 - gainP
       gainI = 0 - gainI
       gainD = 0 - gainD
@@ -115,6 +133,56 @@ class Generic_Robot:
     self.robot.stop()
     self.lm.brake()
     self.rm.brake()
+
+  def ShiftGear(self, speed, gear):
+    CurrentGear = 1
+    Change = CurrentGear + gear # Need absolute value of gear?
+    def gearlogic(self, gear):
+      print(CurrentGear, " to ", gear)
+      if CurrentGear + Change > 4:
+        CurrentGear = CurrentGear + Change - 4
+      elif CurrentGear + Change < 1:
+        CurrentGear = CurrentGear + Change + 4
+      elif 1 < CurrentGear + Change <= 4:
+        CurrentGear =+ Change
+      print("after = ", CurrentGear)
+    motor = "right"
+    #angle = 90 *
+    if Change == 0:
+      wait(0)
+      print("change=0")
+    elif Change == 1:
+      print("change=1")
+      robot.act_run_angle(motor, self.speed, angle=90, wait=True)
+      gearlogic(gear)
+    elif Change == 2:
+      print("change=2")
+      robot.act_run_angle(motor, self.speed, angle=180, wait=True)
+      gearlogic(gear)
+    elif Change == 3:
+      print("change=3")
+      robot.act_run_angle(motor, self.speed, angle=270, wait=True)
+      gearlogic(gear)
+    elif Change == 4:
+      print("change=4")
+      robot.act_run_angle(motor, self.speed, angle=-90, wait=True)
+      gearlogic(gear)
+    elif Change == -1:
+      print("change=-1")
+      robot.act_run_angle(motor, self.speed, angle=-90, wait=True)
+      gearlogic(gear)
+    elif Change == -2:
+      print("change=-2")
+      robot.act_run_angle(motor, self.speed, angle=-120, wait=True)
+      gearlogic(gear)
+    elif Change == -3:
+      print("change=-3")
+      robot.act_run_angle(motor, self.speed, angle=-270, wait=True)
+      gearlogic(gear)
+    elif Change == -4:
+      print("change=-4")
+      robot.act_run_angle(motor, self.speed, angle=90, wait=True)
+      gearlogic(gear)
 
   ### CALIBRATE COLOR ###
   def calibrate_color(self):

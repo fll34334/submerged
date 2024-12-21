@@ -1,4 +1,5 @@
 from robot import Robot_Plus
+from robot import Generic_Robot
 import master
 
 class GyroDrive:
@@ -33,7 +34,7 @@ class Pivot:
     robot.pivot(self.angle, self.speed)
     robot.wait(self.wait)
 
-class Pivot:
+class GyroPivot:
   def __init__(self, angle=0, speed=100, wait=75):
     self.angle = angle
     self.speed = speed
@@ -98,51 +99,6 @@ class ShiftGear:
     self.speed = speed
     self.gear = gear
     self.wait = wait
-    gear = self.gear
   def run(self, robot):
-    speed = self.speed
-    gear = self.gear
-    Change = gear - CurrentGear #find way to get current gear from master and only have it stored in master so it is always running
-    if Change == 0:
-      robot.wait(time=100)
-      print("change=0")
-    elif Change == 1:
-      print("change=1")
-      robot.act_run_angle(motor="right", speed=150, angle=90, wait=True)
-      #gearlogic(CurrentGear, gear, Change)
-      master.GearVar.gearlogic(CurrentGear, gear, Change)
-    elif Change == 2:
-      print("change=2")
-      robot.act_run_angle(motor="right", speed=150, angle=180, wait=True)
-      #gearlogic(CurrentGear, gear, Change)
-      master.GearVar.gearlogic(CurrentGear, gear, Change)
-    elif Change == 3:
-      print("change=3")
-      robot.act_run_angle(motor="right", speed=150, angle=270, wait=True)
-      #gearlogic(CurrentGear, gear, Change)
-      master.GearVar.gearlogic(CurrentGear, gear, Change)
-    elif Change == 4:
-      print("change=4")
-      robot.act_run_angle(motor="right", speed=150, angle=-90, wait=True)
-      #gearlogic(CurrentGear, gear, Change)
-      master.GearVar.gearlogic(CurrentGear, gear, Change)
-    elif Change == -1:
-      print("change=-1")
-      robot.act_run_angle(motor="right", speed=150, angle=-90, wait=True)
-      #gearlogic(CurrentGear, gear, Change)
-      master.GearVar.gearlogic(CurrentGear, gear, Change)
-    elif Change == -2:
-      print("change=-2")
-      robot.act_run_angle(motor="right", speed=150, angle=-120, wait=True)
-      #gearlogic(CurrentGear, gear, Change)
-      master.GearVar.gearlogic(CurrentGear, gear, Change)
-    elif Change == -3:
-      print("change=-3")
-      robot.act_run_angle(motor="right", speed=150, angle=-270, wait=True)
-      #gearlogic(CurrentGear, gear, Change)
-      master.GearVar.gearlogic(CurrentGear, gear, Change)
-    elif Change == -4:
-      print("change=-4")
-      robot.act_run_angle(motor="right", speed=150, angle=90, wait=True)
-      #gearlogic(CurrentGear, gear, Change)
-      master.GearVar.gearlogic(CurrentGear, gear, Change)
+    robot.ShiftGear(self.gear, self.speed,)
+
