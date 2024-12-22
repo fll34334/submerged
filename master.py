@@ -163,17 +163,3 @@ class Master_Main():
     self.ev3.screen.set_font(self.mission_font)
     self.display(0, "IMAGES/buttons/buttons-empty")
     self.module()
-
-class GearVar():
-  def __init__(self, CurrentGear):
-    self.CurrentGear = CurrentGear
-    CurrentGear = self.CurrentGear
-  def gearlogic(CurrentGear, gear, Change):
-    print(CurrentGear, " to ", gear)
-    if CurrentGear + Change > 4:
-      CurrentGear = CurrentGear + Change - 4
-    elif CurrentGear + Change < 1:
-      CurrentGear = CurrentGear + Change + 4
-    elif 1 < CurrentGear + Change <= 4:
-      CurrentGear =+ Change
-    print("after = ", CurrentGear)
