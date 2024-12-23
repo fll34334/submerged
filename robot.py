@@ -274,7 +274,7 @@ class Robot_Plus(Generic_Robot):
     ############################################
 
     self.wheel_diameter = 62.4
-    self.wheel_base = 128.0
+    self.wheel_base = 109.5
     self.name = name
     self.ev3 = EV3Brick()
     self.left_motor = Motor(Port.B, Direction.CLOCKWISE, gears=None)
