@@ -329,31 +329,21 @@ class Robot_Plus(Generic_Robot):
     Change = gear - CurrentGear
 
     if Change == 0:
-      print("change=0")
       wait(0)
     elif Change == 1:
-      print("change=1")
-      self.act_run_angle(motor="right", speed=self.speed, angle=15, wait=True)
+      self.act_run_angle(motor="right", speed=self.speed, angle=5, wait=True)
     elif Change == 2:
-      print("change=2")
-      self.act_run_angle(motor="right", speed=self.speed, angle=30, wait=True)
+      self.act_run_angle(motor="right", speed=self.speed, angle=10, wait=True)
     elif Change == 3:
-      print("change=3")
-      self.act_run_angle(motor="right", speed=self.speed, angle=45, wait=True)
-    elif Change == 4:
-      print("change=4")
-      self.act_run_angle(motor="right", speed=self.speed, angle=-15, wait=True)
-    elif Change == -1:
-      print("change=-1")
-      self.act_run_angle(motor="right", speed=self.speed, angle=-15, wait=True)
-    elif Change == -2:
-      print("change=-2")
-      self.act_run_angle(motor="right", speed=self.speed, angle=-30, wait=True)
-    elif Change == -3:
-      print("change=-3")
-      self.act_run_angle(motor="right", speed=self.speed, angle=-45, wait=True)
-    elif Change == -4:
-      print("change=-4")
       self.act_run_angle(motor="right", speed=self.speed, angle=15, wait=True)
-      
+    elif Change == 4:
+      self.act_run_angle(motor="right", speed=self.speed, angle=-5, wait=True)
+    elif Change == -1:
+      self.act_run_angle(motor="right", speed=self.speed, angle=-5, wait=True)
+    elif Change == -2:
+      self.act_run_angle(motor="right", speed=self.speed, angle=-10, wait=True)
+    elif Change == -3:
+      self.act_run_angle(motor="right", speed=self.speed, angle=-15, wait=True)
+    elif Change == -4:
+      self.act_run_angle(motor="right", speed=self.speed, angle=5, wait=True)
     CurrentGear = gear
