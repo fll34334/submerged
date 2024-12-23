@@ -331,19 +331,19 @@ class Robot_Plus(Generic_Robot):
     if Change == 0:
       wait(0)
     elif Change == 1:
-      self.act_run_angle(motor="right", speed=self.speed, angle=5, wait=True)
+      self.act_run_angle(motor="right", speed=self.speed, angle=30, wait=True)
     elif Change == 2:
-      self.act_run_angle(motor="right", speed=self.speed, angle=10, wait=True)
+      self.act_run_angle(motor="right", speed=self.speed, angle=60, wait=True)
     elif Change == 3:
-      self.act_run_angle(motor="right", speed=self.speed, angle=15, wait=True)
+      self.act_run_angle(motor="right", speed=self.speed, angle=90, wait=True)
     elif Change == 4:
-      self.act_run_angle(motor="right", speed=self.speed, angle=-5, wait=True)
+      self.act_run_angle(motor="right", speed=self.speed, angle=-30, wait=True)
     elif Change == -1:
-      self.act_run_angle(motor="right", speed=self.speed, angle=-5, wait=True)
+      self.act_run_angle(motor="right", speed=self.speed, angle=-30, wait=True)
     elif Change == -2:
-      self.act_run_angle(motor="right", speed=self.speed, angle=-10, wait=True)
+      self.act_run_angle(motor="right", speed=self.speed, angle=-60, wait=True)
     elif Change == -3:
-      self.act_run_angle(motor="right", speed=self.speed, angle=-15, wait=True)
+      self.act_run_angle(motor="right", speed=self.speed, angle=-90, wait=True)
     elif Change == -4:
-      self.act_run_angle(motor="right", speed=self.speed, angle=5, wait=True)
+      self.act_run_angle(motor="right", speed=self.speed, angle=30, wait=True)
     CurrentGear = gear
