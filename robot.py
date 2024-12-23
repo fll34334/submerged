@@ -8,6 +8,9 @@ from pybricks.media.ev3dev import Image, ImageFile
 
 from pid import PIDController
 import math
+from tesst import gearlogic
+
+CurrentGear = 1
 
 class Generic_Robot:
   def __init__(self, EV3Brick, DriveBase, LeftMotor, RightMotor, LightSensorLeft, LightSensorRight, GyroSensor, WheelDiameter, WheelBase):
@@ -315,56 +318,42 @@ class Robot_Plus(Generic_Robot):
       self.left_motor.run_angle(speed, angle, wait=wait)
     elif motor == "right":
       self.right_motor.run_angle(speed, angle, wait=wait)
-  
+
+
+
   def ShiftGear(self, speed, gear):
     self.speed = speed
-    CurrentGear = 0
-    #Change = CurrentGear + gear # Need absolute value of gear?
-    def gearlogic(self, gear):
-      CurrentGear = 0
-      print(CurrentGear, " to ", gear)
-      if CurrentGear + Change > 4:
-        CurrentGear = CurrentGear + Change - 4
-      elif CurrentGear + Change < 1:
-        CurrentGear = CurrentGear + Change + 4
-      elif 1 < CurrentGear + Change <= 4:
-        CurrentGear =+ Change
-      print("after = ", CurrentGear)
-    motor = "right"
-    #angle = 90 *
-    Change = CurrentGear + gear
+    global CurrentGear
+    if gear > 4 or gear < 1:
+      raise ValueError("gear must be between 1 and 4")
+    Change = gear - CurrentGear
+
     if Change == 0:
-      wait(0)
       print("change=0")
+      wait(0)
     elif Change == 1:
       print("change=1")
-      self.act_run_angle(motor="right", speed=self.speed, angle=90, wait=True)
-      gearlogic(gear)
+      self.act_run_angle(motor="right", speed=self.speed, angle=15, wait=True)
     elif Change == 2:
       print("change=2")
-      self.act_run_angle(motor="right", speed=self.speed, angle=180, wait=True)
-      gearlogic(gear)
+      self.act_run_angle(motor="right", speed=self.speed, angle=30, wait=True)
     elif Change == 3:
       print("change=3")
-      self.act_run_angle(motor="right", speed=self.speed, angle=270, wait=True)
-      gearlogic(gear)
+      self.act_run_angle(motor="right", speed=self.speed, angle=45, wait=True)
     elif Change == 4:
       print("change=4")
-      self.act_run_angle(motor="right", speed=self.speed, angle=-90, wait=True)
-      gearlogic(gear)
+      self.act_run_angle(motor="right", speed=self.speed, angle=-15, wait=True)
     elif Change == -1:
       print("change=-1")
-      self.act_run_angle(motor="right", speed=self.speed, angle=-90, wait=True)
-      gearlogic(gaer)
+      self.act_run_angle(motor="right", speed=self.speed, angle=-15, wait=True)
     elif Change == -2:
       print("change=-2")
-      self.act_run_angle(motor="right", speed=self.speed, angle=-120, wait=True)
-      gearlogic(gear)
+      self.act_run_angle(motor="right", speed=self.speed, angle=-30, wait=True)
     elif Change == -3:
       print("change=-3")
-      self.act_run_angle(motor="right", speed=self.speed, angle=-270, wait=True)
-      gearlogic(gear)
+      self.act_run_angle(motor="right", speed=self.speed, angle=-45, wait=True)
     elif Change == -4:
       print("change=-4")
-      self.act_run_angle(motor="right", speed=self.speed, angle=90, wait=True)
-      gearlogic(gear)
+      self.act_run_angle(motor="right", speed=self.speed, angle=15, wait=True)
+      
+    CurrentGear = gear
