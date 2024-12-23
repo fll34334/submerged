@@ -8,7 +8,6 @@ from pybricks.media.ev3dev import Image, ImageFile
 
 from pid import PIDController
 import math
-from tesst import gearlogic
 
 CurrentGear = 1
 

@@ -75,7 +75,12 @@ class ActMotorAngle:
     self.wait = wait
 
   def run(self, robot):
-    robot.act_run_angle(self.motor, self.angle, self.speed, self.wait)
+    if self.motor == "left" or self.motor == "right":
+      robot.act_run_angle(self.motor, self.angle, self.speed, self.wait)
+    elif 1 <= self.motor <= 4:
+      robot.ShiftGear(speed=100, gear=self.motor)
+      robot.wait(75)
+      robot.act_run_angle(self.motor, self.angle, self.speed, self.wait)
 
 class ActMotorTime:
   def __init__(self, motor="left", time=1000, speed=200, wait=True):
@@ -85,7 +90,12 @@ class ActMotorTime:
     self.wait = wait
 
   def run(self, robot):
-    robot.act_run_time(self.motor, self.speed, self.time, self.wait)
+    if self.motor == "left" or self.motor == "right":
+      robot.act_run_time(motor=self.motor, time=self.time, speed=self.speed, wait=self.wait)
+    elif 1 <= self.motor <= 4:
+      robot.ShiftGear(speed=100, gear=self.motor)
+      robot.wait(75)
+      robot.act_run_time(motor="right", time=self.time, speed=self.speed, wait=self.wait)
 
 class Wait:
   def __init__(self, time=1000):
