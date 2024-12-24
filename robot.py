@@ -72,6 +72,7 @@ class Generic_Robot:
   ### Gyro Pivot ###
   def GyroPivot(self, target_angle, speed):
     self.robot.reset()
+    # Reverse logic
     net_angle = target_angle
     left_speed = speed
     right_speed = 0 - speed
@@ -79,11 +80,8 @@ class Generic_Robot:
     if 0 < speed and 0 > target_angle:
       left_speed = left_speed * -1
       right_speed = right_speed * -1
-      #net_angle = target_angle * -1
       Reverse_angle=True
     if 0 > speed and 0 < target_angle:
-      #left_speed = left_speed * -1
-      #right_speed = right_speed * -1
       net_angle = target_angle * -1
       Reverse_angle = True
     if 0 > speed and 0 > target_angle:
@@ -91,10 +89,12 @@ class Generic_Robot:
       left_speed = left_speed * -1
       right_speed = right_speed * -1
     
+    # Start moving
     self.gyro.reset_angle(0)
     self.lm.run(speed=left_speed)
     self.rm.run(speed=right_speed)
 
+    # Gyro logic
     if Reverse_angle:
       while self.gyro.angle() > net_angle:
         wait(0)
@@ -102,6 +102,7 @@ class Generic_Robot:
       while self.gyro.angle() < net_angle:
         wait(0)
 
+    # Stop
     self.lm.stop()
     self.rm.stop()
     
@@ -110,18 +111,45 @@ class Generic_Robot:
 
   ### Gyro Pivot Error Correction ###
   def GyroPivotEC(self, target_angle, speed):
+    # Runs Gyro pivot and gets data
     net_angle=self.GyroPivot(target_angle, speed)
     Turn_Error = self.gyro.angle() - net_angle
     print(Turn_Error)
     Pre_angle = self.gyro.angle()
     
-    #while not (-1 <= Turn_Error <= 1): 
+    # skiping logic
     if Turn_Error == 0:
       print("skiping")
     else:
-      self.GyroPivot(Turn_Error, speed)
-      print("after correction error is:", Pre_angle + self.gyro.angle() - net_angle, "Pre:", Pre_angle, "Current:", self.gyro.angle(), "net:", net_angle)
-      Turn_Error = self.gyro.angle() - net_angle
+      loopcount = 0
+      while loopcount <= 4 and not (-1 <= Turn_Error <= 1): 
+        self.GyroPivot(Turn_Error, speed=100)
+        print("after correction error is:", Pre_angle + self.gyro.angle() - net_angle, "Pre:", Pre_angle, "Current:", self.gyro.angle())
+        Turn_Error = self.gyro.angle() - net_angle
+        loopcount =+ 1
+        print("Looped", loopcount, "times")
+    print("Error correction complete with", loopcount, "loops, and a final error of:", Turn_Error)
+
+  ### Gyro Drive Error Correction ###
+  def GyroDriveEC(self, distance_mm, speed):
+    # Runs GyroDrive and gets data
+    self.GyroDrive(distance_mm, speed)
+    Pre_angle = self.gyro.angle()
+    Turn_Error = self.gyro.angle()
+    print(Turn_Error)
+    
+    # skiping logic
+    if Turn_Error == 0:
+      print("skiping")
+    else:
+      loopcount = 0
+      while loopcount <= 4 and not (-1 <= Turn_Error <= 1): 
+        self.GyroPivot(Turn_Error, speed=100)
+        print("after correction error is:", Pre_angle - self.gyro.angle(), "Current, (GyroPivot error):", self.gyro.angle())
+        Turn_Error = self.gyro.angle()
+        loopcount =+ 1
+        print("Looped", loopcount, "times")
+    print("Error correction complete with", loopcount, "loops, and a final error of:", Turn_Error + Pre_angle)
 
   ### DRIVE GYRO MILIMETERS ###
   def gyro_drive(self, angle, speed, distance_mm, gainP=3.719, gainI=0.54, gainD=0.1125, reset_sensor=True):
