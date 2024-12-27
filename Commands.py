@@ -10,7 +10,7 @@ class GyroDrive:
     self.reset_sensor = reset_sensor
 
   def run(self, robot):
-    robot.gyro_drive(self.angle, self.speed, self.distance_mm, reset_sensor=self.reset_sensor)
+    robot.gyro_driveEC(self.angle, self.speed, self.distance_mm, reset_sensor=self.reset_sensor)
 
 class DriveMM:
   def __init__(self, angle=0, speed=200, distance=0, rate=500, brake=True):
@@ -35,15 +35,15 @@ class Pivot:
     robot.wait(self.wait)
 
 class GyroPivot:
-  def __init__(self, angle=0, speed=100, wait=75):
+  def __init__(self, angle=0, speed=120, wait=250):
     self.angle = angle
     self.speed = speed
     self.wait = wait
 
   def run(self, robot):
-    robot.wait(self.wait)
-    robot.GyroPivot(self.angle, self.speed)
-    robot.wait(self.wait)
+    #robot.wait(self.wait)
+    robot.GyroPivotEC(self.angle, speed=120)
+    #robot.wait(self.wait)
 
 class LineSquare:
   def __init__(self, target=20, targetBlack=13, targetWhite=80, approachSpeed=100, finetuneSpeed=50, returnTime=2500):
