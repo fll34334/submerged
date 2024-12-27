@@ -114,7 +114,6 @@ class Generic_Robot:
 
   ### Gyro Pivot Error Correction ###
   def GyroPivotEC(self, target_angle, speed):
-    # Runs Gyro pivot and gets data
     if target_angle < 0:
       Aprox_angle = target_angle + 6
       offset = 6
@@ -144,7 +143,7 @@ class Generic_Robot:
     if target_angle < 0:
       Reverse_angle = True
     
-    Running_Gyro = target_angle - self.gyro.angle()
+    Running_Gyro = target_angle - self.gyro.angle() #running gyro
     self.lm.run(speed=120)
     self.rm.run(speed=-120)
     
@@ -161,30 +160,26 @@ class Generic_Robot:
     
   ### Gyro Drive Error Correction ###
   def GyroDriveEC(self, distance_mm, speed):
-    # Runs GyroDrive and gets data
-    self.GyroDrive(distance_mm, speed)
-    Pre_angle = self.gyro.angle()
-    Turn_Error = self.gyro.angle()
-    print(Turn_Error)
+    Turn_Error=self.GyroDrive(self.distance_mm, self.speed)
+    print("Turn_Error:", Turn_Error)
     
     # skiping logic
-    if Turn_Error == 0:
+    if -1 <= Turn_Error <= 1:
       print("skiping")
     else:
-      loopcount = 0
-      while loopcount <= 4 and not (-1 <= Turn_Error <= 1): 
-        self.GyroPivot(Turn_Error, speed=100)
-        print("after correction error is:", Pre_angle - self.gyro.angle(), "Current, (GyroPivot error):", self.gyro.angle())
-        Turn_Error = self.gyro.angle()
-        loopcount =+ 1
-        print("Looped", loopcount, "times")
-    print("Error correction complete with", loopcount, "loops, and a final error of:", Turn_Error + Pre_angle)
+      loopcount = 1
+      while loopcount <= 4 and not (-1 <= Turn_Error <= 1):
+        Turn_Error=self.GyroPivot(target_angle=-Turn_Error, speed=25)
+        loopcount += 1
+        print("correction of:", Turn_Error, "Current:", self.gyro.angle(), "Looped", loopcount, "times")
+      print("Done:", loopcount, "loops")
+
 
   ### DRIVE GYRO MILIMETERS ###
-  def gyro_drive(self, angle, speed, distance_mm, gainP=3.719, gainI=0.54, gainD=0.1125, reset_sensor=True):
+  def GyroDrive(self, angle, speed, distance_mm, gainP=3.719, gainI=0.54, gainD=0.1125, reset_sensor=True):
     self.robot.reset()
-    if reset_sensor == True:
-      self.gyro.reset_angle(0)
+    #if reset_sensor == True:
+    self.gyro.reset_angle(0)
     
     # Check & Adjust for Backwards
     if distance_mm < 0:
@@ -209,7 +204,9 @@ class Generic_Robot:
     self.robot.stop()
     self.lm.brake()
     self.rm.brake()
-
+    wait(150)
+    Turn_Error = self.gyro.angle()-target_angle 
+    return Turn_Error
 
   ### CALIBRATE COLOR ###
   def calibrate_color(self):

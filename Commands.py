@@ -3,14 +3,13 @@ from robot import Generic_Robot
 import master
 
 class GyroDrive:
-  def __init__(self, angle=0, speed=200, distance=0, reset_sensor=True):
+  def __init__(self, angle=0, speed=200, distance=0):
     self.angle = angle
     self.speed = speed
     self.distance_mm = distance
-    self.reset_sensor = reset_sensor
 
   def run(self, robot):
-    robot.gyro_driveEC(self.angle, self.speed, self.distance_mm, reset_sensor=self.reset_sensor)
+    robot.GyroDriveEC(self.angle, self.speed, self.distance_mm)
 
 class DriveMM:
   def __init__(self, angle=0, speed=200, distance=0, rate=500, brake=True):
