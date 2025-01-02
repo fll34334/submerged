@@ -330,8 +330,8 @@ class Robot_Plus(Generic_Robot):
     self.wheel_base = 109.5
     self.name = name
     self.ev3 = EV3Brick()
-    self.left_motor = Motor(Port.B, Direction.CLOCKWISE, gears=None)
-    self.right_motor = Motor(Port.C, Direction.CLOCKWISE, gears=None)
+    self.left_motor = Motor(Port.B, Direction.CLOCKWISE, gears=[20, 16])
+    self.right_motor = Motor(Port.C, Direction.CLOCKWISE, gears=[20, 16])
     self.act_right = Motor(Port.D, Direction.CLOCKWISE, gears=None)
     self.act_left = Motor(Port.A, Direction.CLOCKWISE, gears=None)
     self.drive_base = DriveBase(self.left_motor, self.right_motor, self.wheel_diameter, self.wheel_base)
