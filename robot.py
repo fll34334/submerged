@@ -157,23 +157,6 @@ class Generic_Robot:
     self.lm.stop()
     self.rm.stop()
     return target_angle
-    
-  ### Gyro Drive Error Correction ###
-  def GyroDriveEC(self, distance_mm, speed):
-    Turn_Error=self.GyroDrive(self.distance_mm, self.speed)
-    print("Turn_Error:", Turn_Error)
-    
-    # skiping logic
-    if -1 <= Turn_Error <= 1:
-      print("skiping")
-    else:
-      loopcount = 1
-      while loopcount <= 4 and not (-1 <= Turn_Error <= 1):
-        Turn_Error=self.GyroPivot(target_angle=-Turn_Error, speed=25)
-        loopcount += 1
-        print("correction of:", Turn_Error, "Current:", self.gyro.angle(), "Looped", loopcount, "times")
-      print("Done:", loopcount, "loops")
-
 
   ### DRIVE GYRO MILIMETERS ###
   def GyroDrive(self, angle, speed, distance_mm, gainP=3.719, gainI=0.54, gainD=0.1125, reset_sensor=True):
@@ -205,8 +188,25 @@ class Generic_Robot:
     self.lm.brake()
     self.rm.brake()
     wait(150)
-    Turn_Error = self.gyro.angle()-target_angle 
-    return Turn_Error
+
+
+  ### Gyro Drive Error Correction ###
+  def GyroDriveEC(self, angle, speed, distance_mm):
+    self.GyroDrive(angle=angle, speed=speed, distance_mm=distance_mm)
+    Turn_Error = self.gyro.angle() 
+    print("Turn_Error:", Turn_Error)
+    
+    # skiping logic
+    if -1 <= Turn_Error <= 1:
+      print("skiping")
+    else:
+      loopcount = 1
+      while loopcount <= 4 and not (-1 <= Turn_Error <= 1):
+        Turn_Error=self.GyroPivot(target_angle=-Turn_Error, speed=25)
+        loopcount += 1
+        print("correction of:", Turn_Error, "Current:", self.gyro.angle(), "Looped", loopcount, "times")
+      print("Done:", loopcount, "loops")
+
 
   ### CALIBRATE COLOR ###
   def calibrate_color(self):
@@ -327,11 +327,11 @@ class Robot_Plus(Generic_Robot):
     ############################################
 
     self.wheel_diameter = 62.4
-    self.wheel_base = 109.5
+    self.wheel_base = 127.5
     self.name = name
     self.ev3 = EV3Brick()
-    self.left_motor = Motor(Port.B, Direction.CLOCKWISE, gears=[20, 16])
-    self.right_motor = Motor(Port.C, Direction.CLOCKWISE, gears=[20, 16])
+    self.left_motor = Motor(Port.B, Direction.CLOCKWISE, gears=None)
+    self.right_motor = Motor(Port.C, Direction.CLOCKWISE, gears=None)
     self.act_right = Motor(Port.D, Direction.CLOCKWISE, gears=None)
     self.act_left = Motor(Port.A, Direction.CLOCKWISE, gears=None)
     self.drive_base = DriveBase(self.left_motor, self.right_motor, self.wheel_diameter, self.wheel_base)
