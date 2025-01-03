@@ -56,11 +56,11 @@ class Generic_Robot:
   
   ### PIVOT ANGLE ###
   def pivot(self, target_angle, speed):
-    left_speed = speed
-    right_speed = 0 - speed
+    left_speed = 0 - speed
+    right_speed = speed
     if 0 > target_angle:
-      left_speed = 0 - speed
-      right_speed = speed
+      left_speed = speed
+      right_speed = 0 - speed
       target_angle = 0 - target_angle
 
     wheel_circumference_mm = math.pi * self.wheel_diameter
@@ -75,8 +75,8 @@ class Generic_Robot:
     self.robot.reset()
     # Reverse logic
     net_angle = target_angle #- 6
-    left_speed = speed
-    right_speed = 0 - speed
+    left_speed = 0 - speed
+    right_speed = speed
     Reverse_angle = False
     if 0 < speed and 0 > target_angle:
       left_speed = left_speed * -1
@@ -144,8 +144,8 @@ class Generic_Robot:
       Reverse_angle = True
     
     Running_Gyro = target_angle - self.gyro.angle() #running gyro
-    self.lm.run(speed=120)
-    self.rm.run(speed=-120)
+    self.lm.run(speed=-120)
+    self.rm.run(speed=120)
     
     if Reverse_angle:
       while Running_Gyro > target_angle:
@@ -330,8 +330,8 @@ class Robot_Plus(Generic_Robot):
     self.wheel_base = 127.5
     self.name = name
     self.ev3 = EV3Brick()
-    self.left_motor = Motor(Port.B, Direction.CLOCKWISE, gears=None)
-    self.right_motor = Motor(Port.C, Direction.CLOCKWISE, gears=None)
+    self.left_motor = Motor(Port.B, Direction.COUNTERCLOCKWISE, gears=None)
+    self.right_motor = Motor(Port.C, Direction.COUNTERCLOCKWISE, gears=None)
     self.act_right = Motor(Port.D, Direction.CLOCKWISE, gears=None)
     self.act_left = Motor(Port.A, Direction.CLOCKWISE, gears=None)
     self.drive_base = DriveBase(self.left_motor, self.right_motor, self.wheel_diameter, self.wheel_base)
