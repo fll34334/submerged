@@ -93,7 +93,11 @@ robot = Robot_Plus()
 # avg oscillations per run = 4.2 over 700mm
 # Pc = 900.7142857142857ms
 
-robot.gyro_drive(0, 200, 700, 3.719, 0.54, 0.1125)
+
+
+# old robot.GyroDrive(0, 200, 700, 3.719, 0.54, 0.1125)
+
+robot.GyroDrive(0, 200, 1000, 2.8, 0.54, 0.1125)
 
 
 
