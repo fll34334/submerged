@@ -11,6 +11,15 @@ class GyroDrive:
   def run(self, robot):
     robot.GyroDriveEC(self.angle, self.speed, self.distance_mm)
 
+class GyroDriveREG:
+  def __init__(self, angle=0, speed=200, distance=0):
+    self.angle = angle
+    self.speed = speed
+    self.distance_mm = distance
+
+  def run(self, robot):
+    robot.GyroDrive(self.angle, self.speed, self.distance_mm)
+
 class DriveMM:
   def __init__(self, angle=0, speed=200, distance=0, rate=500, brake=True):
     self.angle = angle
@@ -30,7 +39,18 @@ class Pivot:
 
   def run(self, robot):
     robot.wait(self.wait)
-    robot.pivot(self.angle, self.speed)
+    robot.Pivot(self.angle, self.speed)
+    robot.wait(self.wait)
+
+class PivotEC:
+  def __init__(self, angle=0, speed=100, wait=75):
+    self.angle = angle
+    self.speed = speed
+    self.wait = wait
+
+  def run(self, robot):
+    robot.wait(self.wait)
+    robot.PivotEC(self.angle, self.speed)
     robot.wait(self.wait)
 
 class GyroPivot:
@@ -42,6 +62,17 @@ class GyroPivot:
   def run(self, robot):
     #robot.wait(self.wait)
     robot.GyroPivotEC(self.angle, speed=120)
+    #robot.wait(self.wait)
+
+class GyroPivotREG:
+  def __init__(self, angle=0, speed=120, wait=250):
+    self.angle = angle
+    self.speed = speed
+    self.wait = wait
+
+  def run(self, robot):
+    #robot.wait(self.wait)
+    robot.GyroPivot(self.angle, speed=120)
     #robot.wait(self.wait)
 
 class LineSquare:

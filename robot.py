@@ -8,7 +8,7 @@ from pybricks.media.ev3dev import Image, ImageFile
 
 from pid import PIDController
 import math
-
+# for ShiftGear
 CurrentGear = 1
 
 class Generic_Robot:
@@ -24,7 +24,7 @@ class Generic_Robot:
     self.left_color_percent = 5
     self.right_color_percent = 5
     self.left_color_black = 60
-    self.right_color_black = 60 #guessing which is which, but valuse are from robot
+    self.right_color_black = 60
     self.wheel_diameter = WheelDiameter
     self.wheel_base = WheelBase
 
@@ -54,23 +54,46 @@ class Generic_Robot:
     self.lm.run_angle(left_speed, motor_degrees, then=Stop.BRAKE, wait=False)
     self.rm.run_angle(right_speed, motor_degrees, then=Stop.BRAKE)
   
-  ### PIVOT ANGLE ###
-  def pivot(self, target_angle, speed):
+  ### MATH PIVOT ###
+  def Pivot(self, target_angle, speed):
+    self.gyro.reset_angle(0)
+    #pivotoffset = -15
     left_speed = 0 - speed
     right_speed = speed
+    #target_angle += pivotoffset
     if 0 > target_angle:
       left_speed = speed
       right_speed = 0 - speed
-      target_angle = 0 - target_angle
-
+      target_angle = 0 - target_angle #+ pivotoffset
+      # if pivotoffset is added ther needs to be an if statemt to negate or disable it depening on target_angle (if - or small deg)
+    
+    # math
     wheel_circumference_mm = math.pi * self.wheel_diameter
     wheelbase_circumference_mm = math.pi * self.wheel_base
     target_distance = (wheelbase_circumference_mm / 360.0) * target_angle
     motor_degrees = (360 / wheel_circumference_mm) * target_distance
 
     self.drive_tank(motor_degrees, left_speed, right_speed)
+    wait(150)
 
-  ### Gyro Pivot ###
+  ### MATH PIVOT ERROR CORRECTION ###
+  def PivotEC(self, target_angle, speed):
+    self.Pivot(target_angle, speed=120)
+    Turn_Error = self.gyro.angle() - target_angle 
+    print("Turn_Error:", Turn_Error)
+    
+    # skiping logic
+    if -1 <= Turn_Error <= 1:
+      print("skiping")
+    else:
+      loopcount = 1
+      while loopcount <= 4 and not (-1 <= Turn_Error <= 1):
+        Turn_Error=self.GyroPivot(target_angle=-Turn_Error, speed=25)
+        print("error:", Turn_Error, "correction:", self.gyro.angle(), "Looped", loopcount, "times")
+        loopcount += 1
+      print("Done:", loopcount, "loops")
+
+  ### GYRO PIVOT ###
   def GyroPivot(self, target_angle, speed):
     self.robot.reset()
     # Reverse logic
@@ -111,8 +134,7 @@ class Generic_Robot:
     Turn_Error = self.gyro.angle()-target_angle 
     return Turn_Error
   
-
-  ### Gyro Pivot Error Correction ###
+  ### GYRO PIVOT ERROR CORRECTION ###
   def GyroPivotEC(self, target_angle, speed):
     if target_angle < 0:
       Aprox_angle = target_angle + 6
@@ -131,34 +153,11 @@ class Generic_Robot:
       loopcount = 1
       while loopcount <= 4 and not (-1 <= Turn_Error <= 1):
         Turn_Error=self.GyroPivot(target_angle=-Turn_Error, speed=25)
-        loopcount += 1
         print("correction of:", Turn_Error, "Current:", self.gyro.angle(), "Looped", loopcount, "times")
+        loopcount += 1
       print("Done:", loopcount, "loops")
 
-  ### Gyro Pivot locked speed ###
-  def GyroPivotLocked(self, target_angle):
-    self.robot.reset()
-    Reverse_angle = False
-
-    if target_angle < 0:
-      Reverse_angle = True
-    
-    Running_Gyro = target_angle - self.gyro.angle() #running gyro
-    self.lm.run(speed=-120)
-    self.rm.run(speed=120)
-    
-    if Reverse_angle:
-      while Running_Gyro > target_angle:
-        Running_Gyro = self.gyro.angle() - target_angle
-    else:
-      while Running_Gyro < target_angle:
-        Running_Gyro = self.gyro.angle() - target_angle
-
-    self.lm.stop()
-    self.rm.stop()
-    return target_angle
-
-  ### DRIVE GYRO MILIMETERS ###
+  ### GYRO DRIVE ###
   def GyroDrive(self, angle, speed, distance_mm, gainP=3.719, gainI=0.54, gainD=0.1125, reset_sensor=True):
     self.robot.reset()
     #if reset_sensor == True:
@@ -190,7 +189,7 @@ class Generic_Robot:
     wait(150)
 
 
-  ### Gyro Drive Error Correction ###
+  ### GYRO DRIVE ERROR CORRECTION ###
   def GyroDriveEC(self, angle, speed, distance_mm):
     self.GyroDrive(angle=angle, speed=speed, distance_mm=distance_mm)
     Turn_Error = self.gyro.angle() 
@@ -332,8 +331,8 @@ class Robot_Plus(Generic_Robot):
     self.ev3 = EV3Brick()
     self.left_motor = Motor(Port.B, Direction.COUNTERCLOCKWISE, gears=None)
     self.right_motor = Motor(Port.C, Direction.COUNTERCLOCKWISE, gears=None)
-    self.act_right = Motor(Port.D, Direction.CLOCKWISE, gears=None)
-    self.act_left = Motor(Port.A, Direction.CLOCKWISE, gears=None)
+    self.act_right = Motor(Port.D, Direction.COUNTERCLOCKWISE, gears=None)
+    self.act_left = Motor(Port.A, Direction.COUNTERCLOCKWISE, gears=None)
     self.drive_base = DriveBase(self.left_motor, self.right_motor, self.wheel_diameter, self.wheel_base)
     #self.infared = InfraredSensor(Port.S1)
     self.left_color = ColorSensor(Port.S2)
