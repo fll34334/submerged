@@ -111,6 +111,7 @@ class Generic_Robot:
     if 0 > speed and 0 > target_angle:
       net_angle = (target_angle * -1) #- 6
       right_speed = right_speed * -1
+      left_speed = left_speed * -1
     
     # Start moving
     self.gyro.reset_angle(0)
@@ -160,28 +161,37 @@ class Generic_Robot:
   ### GYRO DRIVE ###
   def GyroDrive(self, angle, speed, distance_mm, gainP=3.719, gainI=0.54, gainD=0.1125, reset_sensor=True):
     self.robot.reset()
-    #if reset_sensor == True:
     self.gyro.reset_angle(0)
+    # Reverse logic
+    net_distance = distance_mm * -1
+    ReverseDrive = True
+    gainP *= -1
+    gainI *= -1
+    gainD *= -1
+    truespeed = speed * -1
+    if 0 < speed and 0 > distance_mm:
+      #net_distance *= -1
+      truespeed *= -1
+      ReverseDrive = False
+    if 0 > speed and 0 < distance_mm:
+      net_distance *= -1
+      #truespeed *= -1
+      ReverseDrive = False
+    if 0 > speed and 0 > distance_mm:
+      net_distance *= -1
+      truespeed *= -1
+      ReverseDrive = True
+
     
-    # Check & Adjust for Backwards
-    if distance_mm < 0:
-      gainP = 0 - gainP
-      gainI = 0 - gainI
-      gainD = 0 - gainD
-      speed = 0 - speed
-    if speed < 0:
-      gainP = 0 - gainP
-      gainI = 0 - gainI
-      gainD = 0 - gainD
-      speed = 0 - speed
-    
+    if ReverseDrive:
       pid_controller = PIDController(gainP, gainI, gainD)
-      while self.robot.distance() > distance_mm:
-        self.robot.drive(speed, pid_controller.adjust(angle - self.gyro.angle()))
+      while self.robot.distance() > net_distance:
+        self.robot.drive(truespeed, pid_controller.adjust(angle - self.gyro.angle()))
     else:
       pid_controller = PIDController(gainP, gainI, gainD)
-      while self.robot.distance() < distance_mm:
-        self.robot.drive(speed, pid_controller.adjust(angle - self.gyro.angle()))
+      while self.robot.distance() < net_distance:
+        self.robot.drive(truespeed, pid_controller.adjust(angle - self.gyro.angle()))
+    
 
     self.robot.stop()
     self.lm.brake()
