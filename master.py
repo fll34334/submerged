@@ -26,7 +26,6 @@ class Master_Main():
     self.robot = Robot_Plus()
     self.ev3 = EV3Brick()
     self.missions = [
-      ["M09", m09(), "IMAGES/missions/M09"],
       ["M05", m05(), "IMAGES/missions/M05"],
       ["M06", m06(), "IMAGES/missions/M06"], 
       ["M08", m08(), "IMAGES/missions/M08"],
