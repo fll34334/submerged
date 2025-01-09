@@ -96,9 +96,11 @@ robot = Robot_Plus()
 
 
 # old robot.GyroDrive(0, 200, 700, 3.719, 0.54, 0.1125)
+while True:
+    if EV3Brick.buttons.pressed() == [Button.CENTER]:
+        robot.GyroDrive(0, 175, -900, 1.2, 0.6, 0.2)
 
-robot.GyroDrive(0, 200, 1000, 2.8, 0.54, 0.1125)
-
+# day one: good high D made it mutch better (and low PI)
 
 
 

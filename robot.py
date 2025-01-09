@@ -159,7 +159,7 @@ class Generic_Robot:
       print("Done:", loopcount, "loops")
 
   ### GYRO DRIVE ###
-  def GyroDrive(self, angle, speed, distance_mm, gainP=2.8, gainI=0.54, gainD=0.1125, reset_sensor=True):
+  def GyroDrive(self, angle, speed, distance_mm, gainP=1.2, gainI=0.6, gainD=0.2, reset_sensor=True):
     self.robot.reset()
     self.gyro.reset_angle(0)
     # Reverse logic
