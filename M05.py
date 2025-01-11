@@ -5,5 +5,8 @@ def m05():
     Commands.GyroDrive(speed=-175, distance=50),
     Commands.GyroPivot(angle=-55),
     Commands.GyroDrive(speed=-175, distance=490),
-    Commands.GyroDrive(speed=-175, distance=350, angle=3),
+    Commands.GyroPivot(angle=6),
+    Commands.GyroDrive(speed=-175, distance=400),
+    Commands.ActMotorTime(motor=2, speed=200, time=1800),
+    Commands.ActMotorTime(motor=2, speed=-200, time=1800),
   ]
