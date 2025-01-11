@@ -125,7 +125,7 @@ class ActMotorTime:
     elif 1 <= self.motor <= 4:
       robot.ShiftGear(speed=100, gear=self.motor)
       robot.wait(75)
-      robot.act_run_time(motor="right", time=self.time, speed=self.speed, wait=self.wait)
+      robot.act_run_time(motor="left", time=self.time, speed=self.speed, wait=self.wait)
 
 class Wait:
   def __init__(self, time=1000):
