@@ -61,7 +61,7 @@ class GyroPivot:
 
   def run(self, robot):
     #robot.wait(self.wait)
-    robot.GyroPivotEC(self.angle, speed=120)
+    robot.GyroPivotEC(self.angle, self.speed)
     #robot.wait(self.wait)
 
 class GyroPivotREG:
