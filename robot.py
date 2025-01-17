@@ -262,7 +262,7 @@ class Generic_Robot:
   ### ULTIMATE LINE SQUARING ###
   def black_line_square(self, targetFast, targetBlack, targetWhite, approachSpeed, finetuneSpeed, returnTime):
     def waitUntil(sensor, input1, direction):
-      while self.ajustReading(sensor.reflection(), direction) <= input1:
+      while self.ajustReading(sensor.reflection(), direction) >= input1:
         wait(0)
 
     def colorIsInRange(value):
@@ -286,14 +286,14 @@ class Generic_Robot:
 
       self.robot.drive(approachSpeed, 0)
 
-      if ref1 <= targetFast:
+      if ref1 >= targetFast:
         self.robot.stop()
         self.lm.hold()
         self.rm.run(approachSpeed)
         waitUntil(self.sen2, targetFast, "Right")
         self.rm.hold()
         break
-      elif ref2 <= targetFast:
+      elif ref2 >= targetFast:
         self.robot.stop()
         self.rm.hold()
         self.lm.run(approachSpeed)
