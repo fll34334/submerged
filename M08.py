@@ -13,12 +13,8 @@ def m08():
     Commands.Wait(time=400),
     Commands.DriveMM(speed=20, distance=-35),
     Commands.ActMotorTime(motor='right', speed=-400, time=3000, wait=False),
-    Commands.DriveMM(speed=250, distance=-700, angle=2),
-    
-    ### IF 5 FAILS UNCOMMENT! ###
-    #Commands.Pivot(angle=-40),
-    #Commands.GyroDrive(speed=200, distance=180),
-    #Commands.Pivot(angle=40),
-    #Commands.GyroDrive(speed=270, distance=950),
-    #(and comment the return to red)
+    Commands.Pivot(angle=-40),
+    Commands.GyroDrive(speed=200, distance=180),
+    Commands.Pivot(angle=40),
+    Commands.GyroDrive(speed=270, distance=950),
   ]
