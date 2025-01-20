@@ -27,10 +27,9 @@ class Master_Main():
     self.ev3 = EV3Brick()
     self.missions = [
       ["M05", m05(), "IMAGES/missions/M05"],
-      ["M06", m06(), "IMAGES/missions/M06"], 
-      ["M08", m08(), "IMAGES/missions/M08"],
       ["M02", m02(), "IMAGES/missions/M02"],
       ["M03", m03(), "IMAGES/missions/M03"],
+      ["M08", m08(), "IMAGES/missions/M08"],
       ["M15", m15(), "IMAGES/missions/M15"]
     ]
     self.mission_is_running = False
