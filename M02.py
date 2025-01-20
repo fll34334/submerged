@@ -3,9 +3,9 @@ import Commands
 def m02():
   return [
     # Start Driving
-    Commands.GyroDrive(speed=175, distance=367),
+    Commands.GyroDrive(speed=175, distance=358),
     # Turn to M06
-    Commands.GyroPivot(angle=65),
+    Commands.GyroPivot(angle=68),
     # Arggresively ram with passive grabber
     Commands.GyroDriveREG(speed=250, distance=185),
     # Back outs
