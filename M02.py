@@ -13,5 +13,7 @@ def m02():
     # Ram with passive grabber
     Commands.GyroDrive(speed=175, distance=135),
     # Back out
-    Commands.GyroDrive(speed=175, distance=-160),
+    Commands.GyroDrive(speed=175, distance=-175),
+    # Turn To align with M01
+    Commands.GyroPivot(angle=-90),
     ]
