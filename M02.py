@@ -8,7 +8,7 @@ def m02():
     Commands.GyroPivot(angle=71),
     # Arggresively ram with passive grabber
     Commands.GyroDriveREG(speed=175, distance=120),
-    Commands.GyroDriveREG(speed=250, distance=75),
+    Commands.DriveMM(speed=250, distance=85),
     # Back outs
     Commands.GyroDrive(speed=175, distance=-90),
     # Turn To align with M01
@@ -20,7 +20,9 @@ def m02():
     Commands.GyroDrive(speed=175, distance=-120),
     Commands.GyroPivot(angle=32),
     Commands.ActMotorTime(motor=4, speed=-700, time=3000),
-    Commands.ActMotorTime(motor=4, speed=700, time=3000),
+    Commands.ActMotorTime(motor=4, speed=700, time=3000, wait=False),
     Commands.ActMotorTime(motor=1, speed=300, time=1000),
-    Commands.ActMotorTime(motor=1, speed=-300, time=1000),
+    Commands.ActMotorTime(motor=1, speed=-300, time=1000, Wait=False),
+    Commands.GyroPivot(angle=-34),
+    Commands.DriveMM(speed=250, distance=-850),
     ]
