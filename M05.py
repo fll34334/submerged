@@ -3,7 +3,7 @@ import Commands
 def m05():
   return [
     # Drive from angled jig
-    Commands.GyroDrive(speed=-175, distance=910, angle=1),
+    Commands.GyroDrive(speed=-175, distance=902, angle=1),
     # Turn around
     Commands.GyroPivot(angle=144),
     # Line up
@@ -18,11 +18,11 @@ def m05():
     # Turn away and drop arm
     Commands.GyroPivot(speed=200, angle=-90),
     Commands.ShiftGear(gear=2),
-    Commands.ActMotorTime(speed=300, time=1300, wait=False),
+    Commands.ActMotorTime(speed=-350, time=1300, wait=False),
     # Drive to seabed
     Commands.GyroDrive(speed=-175, distance=148),
     # Lift sample
-    Commands.ActMotorTime(motor=2, speed=-300, time=2400),
+    Commands.ActMotorTime(speed=350, time=2400),
     # Drive away
     Commands.GyroDrive(speed=-200, distance=270),
     # One wheel turn to home
