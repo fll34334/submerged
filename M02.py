@@ -3,14 +3,14 @@ import Commands
 def m02():
   return [
     # Start Driving
-    Commands.GyroDrive(speed=175, distance=358),
+    Commands.GyroDrive(speed=175, distance=364),
     # Turn to M06
-    Commands.GyroPivot(angle=71),
+    Commands.GyroPivot(angle=69),
     # Arggresively ram with passive grabber
     Commands.GyroDriveREG(speed=175, distance=120),
-    Commands.DriveMM(speed=250, distance=85),
+    Commands.DriveMM(speed=250, distance=130),
     # Back outs
-    Commands.GyroDrive(speed=175, distance=-90),
+    Commands.GyroDrive(speed=175, distance=-80),
     # Turn To align with M01
     Commands.GyroPivot(angle=90),
     #drive to M01
@@ -22,7 +22,7 @@ def m02():
     Commands.ActMotorTime(motor=4, speed=-700, time=3000),
     Commands.ActMotorTime(motor=4, speed=700, time=3000, wait=False),
     Commands.ActMotorTime(motor=1, speed=300, time=1000),
-    Commands.ActMotorTime(motor=1, speed=-300, time=1000, Wait=False),
+    Commands.ActMotorTime(motor=1, speed=-300, time=1000, wait=False),
     Commands.GyroPivot(angle=-34),
     Commands.DriveMM(speed=250, distance=-850),
     ]
