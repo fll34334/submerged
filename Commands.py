@@ -123,7 +123,7 @@ class ActMotorTime:
     if self.motor == "left" or self.motor == "right":
       robot.act_run_time(motor=self.motor, time=self.time, speed=self.speed, wait=self.wait)
     elif 1 <= self.motor <= 4:
-      robot.ShiftGear(speed=100, gear=self.motor)
+      robot.ShiftGear(speed=100, gear=self.motor, wait=True)
       robot.wait(75)
       robot.act_run_time(motor="left", time=self.time, speed=self.speed, wait=self.wait)
 
