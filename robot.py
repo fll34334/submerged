@@ -393,7 +393,7 @@ class Robot_Plus(Generic_Robot):
     Change = gear - CurrentGear
 
     if Change == 0:
-      wait(0)
+      return
     elif Change == 1:
       self.act_run_angle(motor="right", speed=self.speed, angle=67.5, wait=self.wait)
     elif Change == 2:

@@ -73,7 +73,7 @@ class Master_Main():
         self.mission_is_running = False
         self.ev3.speaker.beep(frequency=800)
         self.ev3.screen.draw_image(0, self.button_height, "IMAGES/buttons/buttons-abort-pressed")
-    self.robot.ShiftGear(speed=150, gear=1, Wait=True)
+    self.robot.ShiftGear(speed=150, gear=1, wait=True)
     
     wait(500)
 

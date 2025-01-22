@@ -5,5 +5,5 @@ def m03():
     # Push out
     Commands.GyroDriveREG(speed=60, distance=-100),
     # Return to home
-    Commands.GyroDriveREG(speed=60, distance=-100),
+    Commands.GyroDriveREG(speed=60, distance=100),
   ]
