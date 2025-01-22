@@ -135,9 +135,10 @@ class Wait:
     robot.wait(self.time)
 
 class ShiftGear:
-  def __init__(self, speed=150, gear=1):
+  def __init__(self, speed=150, gear=1, wait=True):
     self.speed = speed
     self.gear = gear
+    self.wait = wait
   def run(self, robot):
-    robot.ShiftGear(self.speed, self.gear)
+    robot.ShiftGear(self.speed, self.gear, self.wait)
 

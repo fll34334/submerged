@@ -383,8 +383,10 @@ class Robot_Plus(Generic_Robot):
 
 
 
-  def ShiftGear(self, speed, gear):
+  def ShiftGear(self, speed, gear, wait):
     self.speed = speed
+    self.wait = wait
+    self.gear = gear
     global CurrentGear
     if gear > 4 or gear < 1:
       raise ValueError("gear must be between 1 and 4")
@@ -393,19 +395,19 @@ class Robot_Plus(Generic_Robot):
     if Change == 0:
       wait(0)
     elif Change == 1:
-      self.act_run_angle(motor="right", speed=self.speed, angle=67.5, wait=True)
+      self.act_run_angle(motor="right", speed=self.speed, angle=67.5, wait=self.wait)
     elif Change == 2:
-      self.act_run_angle(motor="right", speed=self.speed, angle=135, wait=True)
+      self.act_run_angle(motor="right", speed=self.speed, angle=135, wait=self.wait)
     elif Change == 3:
-      self.act_run_angle(motor="right", speed=self.speed, angle=202.5, wait=True)
+      self.act_run_angle(motor="right", speed=self.speed, angle=202.5, wait=self.wait)
     elif Change == 4:
-      self.act_run_angle(motor="right", speed=self.speed, angle=-67.5, wait=True)
+      self.act_run_angle(motor="right", speed=self.speed, angle=-67.5, wait=self.wait)
     elif Change == -1:
-      self.act_run_angle(motor="right", speed=self.speed, angle=-67.5, wait=True)
+      self.act_run_angle(motor="right", speed=self.speed, angle=-67.5, wait=self.wait)
     elif Change == -2:
-      self.act_run_angle(motor="right", speed=self.speed, angle=-135, wait=True)
+      self.act_run_angle(motor="right", speed=self.speed, angle=-135, wait=self.wait)
     elif Change == -3:
-      self.act_run_angle(motor="right", speed=self.speed, angle=-202.5, wait=True)
+      self.act_run_angle(motor="right", speed=self.speed, angle=-202.5, wait=self.wait)
     elif Change == -4:
-      self.act_run_angle(motor="right", speed=self.speed, angle=67.5, wait=True)
+      self.act_run_angle(motor="right", speed=self.speed, angle=67.5, wait=self.wait)
     CurrentGear = gear
