@@ -1,5 +1,6 @@
 from robot import Robot_Plus
 from robot import Generic_Robot
+from pybricks.tools import wait
 import master
 
 class GyroDrive:
@@ -124,7 +125,7 @@ class ActMotorTime:
       robot.act_run_time(motor=self.motor, time=self.time, speed=self.speed, wait=self.wait)
     elif 1 <= self.motor <= 4:
       robot.ShiftGear(speed=100, gear=self.motor, wait=True)
-      robot.wait(75)
+      wait(75)
       robot.act_run_time(motor="left", time=self.time, speed=self.speed, wait=self.wait)
 
 class Wait:
