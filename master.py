@@ -9,9 +9,7 @@ from robot import Robot_Plus
 
 
 from M02 import m02
-from M03 import m03
 from M05 import m05
-from M06 import m06
 from M08 import m08
 from M09 import m09
 from M15 import m15
@@ -29,7 +27,8 @@ class Master_Main():
       ["M05", m05(), "IMAGES/missions/M05"],
       ["M02", m02(), "IMAGES/missions/M02"],
       ["M15", m15(), "IMAGES/missions/M15"],
-      ["M08", m08(), "IMAGES/missions/M08"]
+      ["M08", m08(), "IMAGES/missions/M08"],
+      ["M09", m09(), "IMAGES/missions/M09"]
     ]
     self.mission_is_running = False
     self.count = 0
