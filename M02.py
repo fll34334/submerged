@@ -17,5 +17,16 @@ def m02():
     Commands.ActMotorTime(motor=4, speed=-350, time=6000),
     Commands.ActMotorTime(motor=4, speed=350, time=1000),
     Commands.DriveMM(speed=175, distance=300),
-    Commands.ActMotorTime(motor=4, speed=-350, time=6000),
+    Commands.ActMotorTime(motor=4, speed=-350, time=4000),
+    Commands.GyroDrive(speed=-175, distance=-190),
+    Commands.GyroPivot(angle=28),
+
+
+    # M03 backup 3rd run (same jig as M02, useing tiger)
+    # Commands.GyroDrive(speed=-175, distance=385),
+    # Commands.GyroPivot(angle=22, speed=75),
+    # Commands.GyroDrive(speed=-175, distance=380),
+    # Commands.ActMotorTime(speed=250, time=2400),
+    # Commands.ActMotorTime(speed=-200, time=2400),
+    # Commands.GyroDrive(speed=-175, distance=800, angle=28),
     ]
