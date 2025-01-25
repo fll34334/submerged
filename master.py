@@ -26,9 +26,7 @@ class Master_Main():
     self.missions = [
       ["M05", m05(), "IMAGES/missions/M05"],
       ["M02", m02(), "IMAGES/missions/M02"],
-      ["M15", m15(), "IMAGES/missions/M15"],
-      ["M08", m08(), "IMAGES/missions/M08"],
-      ["M09", m09(), "IMAGES/missions/M09"]
+      ["M15", m15(), "IMAGES/missions/M15"]
     ]
     self.mission_is_running = False
     self.count = 0
