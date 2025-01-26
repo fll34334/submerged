@@ -34,7 +34,7 @@ def m02():
     Commands.GyroDrive(speed=-120, distance=25),
     # Do M03
     Commands.ActMotorTime(motor=1, speed=-250, time=2400),
-    Commands.ActMotorTime(motor=1, speed=200, time=2400),
+    Commands.ActMotorTime(motor=1, speed=200, time=3500),
     # Go to tacos-4-life and home to regain mental sanity (not really you cant ever get it back)
     Commands.DriveMM(speed=-175, distance=-800),
     ]

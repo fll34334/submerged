@@ -18,12 +18,11 @@ def m05():
     # Back up to linesqare crying 
     Commands.LineSquare(approachSpeed=75, returnTime=4000),
     # Turn away and drop arm
-    Commands.DriveMM(speed=-100, distance=-20),
-    Commands.GyroPivot(angle=-91),
+    Commands.DriveMM(speed=-100, distance=-12),
+    Commands.GyroPivot(angle=-90),
     # Drive to seabed
-    Commands.GyroDrive(speed=-150, distance=240),
-    Commands.GyroDrive(speed=-175, distance=200),
-    Commands.GyroPivot(angle=-72),
+    Commands.GyroDrive(speed=-175, distance=430),
+    Commands.GyroPivot(angle=-66),
     # Drive to home
     Commands.DriveMM(speed=250, distance=777, angle=1),
   ]
