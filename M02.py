@@ -18,7 +18,7 @@ def m02():
     Commands.ActMotorTime(motor=4, speed=-350, time=6250),
     Commands.ActMotorTime(speed=350, time=2500),
     # Wall square
-    Commands.DriveMM(speed=175, distance=200),
+    Commands.DriveMM(speed=175, distance=150),
     Commands.DriveMM(speed=100, distance=50),
     # Align with M02
     Commands.GyroDriveREG(speed=125, distance=25),
@@ -29,12 +29,12 @@ def m02():
     # Back really outs
     Commands.GyroDrive(speed=-175, distance=-190, angle=-5),
     # Pivot to align with M03
-    Commands.GyroPivot(speed=80, angle=16),
+    Commands.GyroPivot(speed=80, angle=24),
     # Drive to M03
     Commands.GyroDrive(speed=-120, distance=25),
     # Do M03
     Commands.ActMotorTime(motor=1, speed=-250, time=2400),
     Commands.ActMotorTime(motor=1, speed=200, time=3500),
-    # Go to tacos-4-life and home to regain mental sanity (not really you cant ever get it back)
+    # Go to tacos-4-life and then home to regain mental sanity (not really you cant ever get it back)
     Commands.DriveMM(speed=-175, distance=-800),
     ]
